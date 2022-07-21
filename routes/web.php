@@ -23,3 +23,6 @@ Route::post('/product/store', 'ProductController@store');
 //edit product
 Route::get('/product/edit/{id}', 'ProductController@edit');
 Route::post('/product/edit/update/{id}', 'ProductController@update');
+
+//destroy product
+Route::get('/product/delete/{id}', 'ProductController@destroy');
