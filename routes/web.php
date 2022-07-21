@@ -26,3 +26,6 @@ Route::post('/product/edit/update/{id}', 'ProductController@update');
 
 //destroy product
 Route::get('/product/delete/{id}', 'ProductController@destroy');
+
+//get data from api
+Route::get('/get-json', 'ProductController@getJson');
