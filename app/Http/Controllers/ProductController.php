@@ -52,4 +52,15 @@ class ProductController extends Controller
 
         return redirect('/product')->with('status', 'Produk Anda Sudah Ditambahkan'); 
     }
+
+    public function edit($id)
+    {
+        $data = Product::where('id_produk', $id)
+        ->first();
+        
+        return view('admin.product.form')->with([
+            'data' => $data
+        ]);
+
+    }
 }
