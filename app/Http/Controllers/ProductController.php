@@ -87,4 +87,11 @@ class ProductController extends Controller
 
         return redirect('/product')->with('status', 'Produk Anda Sudah Diedit'); 
     }
+
+    public function destroy($id)
+    {
+        Product::where('id_produk', $id)->delete();
+
+        return redirect()->back()->with('status', 'Produk Anda Sudah Dihapus'); 
+    }
 }
