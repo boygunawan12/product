@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//display data
 Route::get('/product', 'ProductController@index');
 
 //create product
 Route::get('/product/create', 'ProductController@create');
 Route::post('/product/store', 'ProductController@store');
+
+//edit product
+Route::get('/product/edit/{id}', 'ProductController@edit');
+Route::post('/product/edit/update/{id}', 'ProductController@update');
