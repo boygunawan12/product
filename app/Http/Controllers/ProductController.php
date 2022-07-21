@@ -94,4 +94,49 @@ class ProductController extends Controller
 
         return redirect()->back()->with('status', 'Produk Anda Sudah Dihapus'); 
     }
+
+    public function getJson()
+    {
+        $baseUrl = env('URL_API');
+
+        $date  = date("d");
+        $month = date("m");
+        $gety  = date("Y");
+        $hour  = date('H');
+        $year  = substr($gety, -2);
+
+        $user = "tesprogrammer".$date.$month.$year."C".$hour;
+        $pass = md5("bisacoding-".$date."-".$month."-".$year);
+
+        $client = new Client([
+                'base_uri' => $baseUrl
+            ]);
+        $response = $client->post('tes/api_tes_programmer', [
+            'form_params' => [
+                'username' => $user,
+                'password' => $pass
+            ],
+        ]);
+        $get = json_decode($response->getBody()->getContents());
+
+        foreach ($get->data as $result)
+        {
+            $data = array(
+                'id_produk' => $result->id_produk,
+                'nama_produk' => $result->nama_produk,
+                'harga' => $result->harga,
+                'kategori' => $result->kategori,
+                'status' => $result->status
+            );
+
+            try {
+                Product::insert($data); 
+            } catch (\Illuminate\Database\QueryException $e){
+                $errorCode = $e->errorInfo[1];
+                if ($errorCode == '1062'){
+                    return redirect('/product')->with('status', 'ID Produk Sudah Dipakai'); 
+                }
+            }      
+        } 
+    }
 }
