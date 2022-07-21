@@ -130,7 +130,9 @@ class ProductController extends Controller
             );
 
             try {
-                Product::insert($data); 
+                Product::insert($data);
+                
+                return redirect('/product')->with('status', 'Produk Anda Sudah Ditambahkan');
             } catch (\Illuminate\Database\QueryException $e){
                 $errorCode = $e->errorInfo[1];
                 if ($errorCode == '1062'){
